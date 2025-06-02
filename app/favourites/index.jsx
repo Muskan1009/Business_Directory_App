@@ -4,12 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function FavouritesScreen() {
+  
   const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    const unsubscribe = fetchFavorites();
-    return () => unsubscribe;
-  }, []);
 
   const fetchFavorites = async () => {
     const stored = await AsyncStorage.getItem('favorites');
@@ -21,6 +17,11 @@ export default function FavouritesScreen() {
     setFavorites(updated);
     await AsyncStorage.setItem('favorites', JSON.stringify(updated));
   };
+
+  useEffect(() => {
+    const unsubscribe = fetchFavorites();
+    return () => unsubscribe;
+  }, []);
 
   const renderItem = ({ item }) => (
     <View className="bg-white rounded-lg p-4 m-2 shadow">
